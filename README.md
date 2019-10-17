@@ -42,7 +42,64 @@ export default {
 };
 ```
 
-2.  Use loader component to display loading or error
+2. Use a loader component to display loading or error (exemple)
+
+```vue
+<template>
+  <div class="loader" :class="{ 'is-loading': isLoading }">
+    <slot :name="slotName">
+      <div class="loading">
+        <div class="icon-spinner3" v-if="isLoading"></div>
+      </div>
+      <div class="error" v-if="hasError">{{ errorMessage }}</div>
+    </slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Loader',
+
+  props: {
+    store: {
+      type: [Array, String],
+      default: () => [],
+    },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
+  },
+
+  computed: {
+    slotName() {
+      if (this.isLoading) return 'loading';
+      if (this.hasError) return 'error';
+      return 'default';
+    },
+
+    storeArray() {
+      return Array.isArray(this.store) ? this.store : [this.store];
+    },
+
+    isLoading() {
+      if (this.$isServer) return false;
+      return this.storeArray.reduce((loading, store) => {
+        return loading || this.isStoreLoading(store);
+      }, false);
+    },
+
+    hasError() {
+      return (
+        this.storeArray.reduce((loading, store) => {
+          return loading || this.storeHasError(store);
+        }, false)
+      );
+    },
+  },
+};
+</script>
+```
 
 ```vue
 <Loader :store="['store1', 'store2']">
