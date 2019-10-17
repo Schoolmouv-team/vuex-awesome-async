@@ -11,7 +11,7 @@ Dans le main.js:
 ```javascript
 import VueState from 'vue-store-loading-state';
 
-Vue.use(VueState, { loaderName: 'Loader' });
+Vue.use(VueState);
 ```
 
 ## Usage
