@@ -30,9 +30,9 @@ const defaultState = <S>(
 // eslint-disable-next-line no-unused-vars
 export const wrapState = (name: string, cacheDuration: number) => <S>(
   values: S,
-  isStatic = false,
+  options: {isStatic: boolean} = {isStatic: false},
 ): StateWithLoading<S> | (() => StateWithLoading<S>) =>
-  isStatic
+  options.isStatic
     ? defaultState(values, cacheDuration)()
     : defaultState(values, cacheDuration);
 

@@ -67,7 +67,8 @@ export default {
 - wrapStore
 
   - name: the name of the store
-  - isStatic: a static store is an object. In SSR mode, store should be a function to avoid singleton (default: false)
+  - options: object
+    - isStatic: a static store is an object. In SSR mode, store should be a function to avoid singleton (default: false)
 
 - wrapState
 

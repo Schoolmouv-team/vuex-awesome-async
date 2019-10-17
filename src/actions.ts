@@ -113,17 +113,19 @@ const wrapActionCache = <S>(
 
 export const wrapActionCacheFetchKey = (name: string) => <S>(
     handler: CustomActionHandler<S>,
-    key?: string,
-    object: string = name,
+    options: {
+      payloadKey?: string,
+      stateKey?: string,
+    }
 ) => {
-  return wrapActionCache(name, key || 'payload', object, handler);
+  return wrapActionCache(name, options.payloadKey || 'payload', options.stateKey || name, handler);
 };
 
 export const wrapActionCacheFetchAll = (name: string) => <S>(
     handler: CustomActionHandler<S>,
-    object?: string,
+    options: { stateKey?: string }
 ) => {
-  return wrapActionCache(name, 'all', object || name, handler);
+  return wrapActionCache(name, 'all', options.stateKey || name, handler);
 };
 
 export const wrapActions = (name: string) => <S>(actions: ActionTree<S, S>) => {
