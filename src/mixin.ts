@@ -1,32 +1,37 @@
 import Component from 'vue-class-component';
 import Vue from 'vue';
 
-@Component
-export class StateMixin extends Vue {
+//@Component
+export const StateMixin = {
   /**
    * Find if a store is on loading state or not
    * @return {function(string): boolean}
    */
-  get isStoreLoading(): ((name: string) => boolean) {
-    const getters = this.$store.getters;
-    return name => getters[`${name}IsLoading`];
-  }
+  computed: {
+    isStoreLoading(): ((name: string) => boolean) {
+      // @ts-ignore
+      const getters = this.$store.getters;
+      return name => getters[`${name}/${name}IsLoading`] || getters[`${name}IsLoading`];
+    },
 
-  /**
-   * Find if a store is on error state or not
-   * @return {function(string): boolean}
-   */
-  get storeHasError(): ((name: string) => boolean) {
-    const getters = this.$store.getters;
-    return name => !!getters[`${name}Error`];
-  }
+    /**
+     * Find if a store is on error state or not
+     * @return {function(string): boolean}
+     */
+    storeHasError(): ((name: string) => boolean) {
+      // @ts-ignore
+      const getters = this.$store.getters;
+      return name => !!getters[`${name}/${name}Error`] || !!getters[`${name}Error`];
+    },
 
-  /**
-   * Get the store
-   * @return {function(string): Error|null}
-   */
-  get getStoreError(): ((name: string) => Error) {
-    const getters = this.$store.getters;
-    return name => getters[`${name}Error`];
+    /**
+     * Get the store
+     * @return {function(string): Error|null}
+     */
+    getStoreError(): ((name: string) => Error) {
+      // @ts-ignore
+      const getters = this.$store.getters;
+      return name => getters[`${name}/${name}Error`] || getters[`${name}Error`];
+    } ,
   }
 }
