@@ -111,7 +111,7 @@ const wrapActionCache = <S>(
   return res;
 };
 
-export const wrapActionCacheFetchKey = (name: string) => <S>(
+export const wrapActionCacheFetchKey = <S>(name: string) => (
     handler: CustomActionHandler<S>,
     options: {
       payloadKey?: string,
@@ -121,14 +121,14 @@ export const wrapActionCacheFetchKey = (name: string) => <S>(
   return wrapActionCache(name, options.payloadKey || 'payload', options.stateKey || name, handler);
 };
 
-export const wrapActionCacheFetchAll = (name: string) => <S>(
+export const wrapActionCacheFetchAll = <S>(name: string) => (
     handler: CustomActionHandler<S>,
     options: { stateKey?: string }
 ) => {
   return wrapActionCache(name, 'all', options.stateKey || name, handler);
 };
 
-export const wrapActions = (name: string) => <S>(actions: ActionTree<S, S>) => {
+export const wrapActions = <S>(name: string) => (actions: ActionTree<S, S>) => {
   return Object.keys(actions).reduce(
       (acc: ActionTree<StateWithLoading<S>, S>, key) => ({
         ...acc,

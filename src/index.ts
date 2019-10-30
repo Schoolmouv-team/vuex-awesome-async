@@ -14,14 +14,14 @@ interface PluginOptions {
  * @param name
  * @param cacheDuration
  */
-const wrapStore = (name: string, cacheDuration = 0) => {
+const wrapStore = <S>(name: string, cacheDuration = 0) => {
   return {
-    wrapState: wrapState(name, cacheDuration),
-    wrapGetters: wrapGetters(name),
-    wrapActions: wrapActions(name),
-    wrapActionCacheFetchKey: wrapActionCacheFetchKey(name),
-    wrapActionCacheFetchAll: wrapActionCacheFetchAll(name),
-    wrapMutations: wrapMutations(name),
+    wrapState: wrapState<S>(name, cacheDuration),
+    wrapGetters: wrapGetters<S>(name),
+    wrapActions: wrapActions<S>(name),
+    wrapActionCacheFetchKey: wrapActionCacheFetchKey<S>(name),
+    wrapActionCacheFetchAll: wrapActionCacheFetchAll<S>(name),
+    wrapMutations: wrapMutations<S>(name),
   };
 };
 
