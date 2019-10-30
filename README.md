@@ -3,13 +3,13 @@
 ## Installation
 
 ```
-npm i vue-store-loading-state
+npm i @schoolmouv/vuex-awesome-async
 ```
 
 Dans le main.js:
 
 ```javascript
-import VueState from 'vue-store-loading-state';
+import VueState from '@schoolmouv/vuex-awesome-async';
 
 Vue.use(VueState);
 ```
@@ -20,7 +20,7 @@ Vue.use(VueState);
 
 ```javascript
 import Vue from 'vue';
-import { wrapStore } from 'vue-store-loading-state';
+import { wrapStore } from '@schoolmouv/vuex-awesome-async';
 
 const { wrapMutations, wrapActions, wrapGetters, wrapState } = wrapStore(
   'store',
