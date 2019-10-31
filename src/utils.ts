@@ -23,7 +23,7 @@ export const isObjectInCache = <S>(state: StateWithLoading<S>) => (key: string) 
       : new Date(cacheObject.lastRequestTime).getTime();
 
   return (
-      lastRequest + state.cacheDuration <
+      lastRequest + state.cacheDuration >
       new Date().getTime()
   );
 };

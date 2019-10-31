@@ -3,7 +3,7 @@ import {commitNamesGenerator} from "./utils";
 import Vue from "vue";
 import {StateWithLoading} from "./state";
 
-export const wrapMutations = (name: string) => <S>(mutations: MutationTree<S>) => {
+export const wrapMutations = <S>(name: string) => (mutations: MutationTree<S>) => {
   const {
     startLoadingName,
     endLoadingName,
