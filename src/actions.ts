@@ -1,4 +1,4 @@
-import {ActionContext, ActionTree, Commit} from "vuex";
+import {ActionContext, ActionHandler, ActionTree, Commit, Store} from "vuex";
 import {StateWithLoading} from "./state";
 import {commitNamesGenerator, isObjectInCache} from "./utils";
 
@@ -14,12 +14,9 @@ export interface ActionUtils {
   getPendingRequest: (key: string) => Promise<any>;
 }
 
-export type CustomActionHandler<S> = (
-    context: ActionContextWithUtils<StateWithLoading<S>>,
-    key?: string | number,
-) => Promise<any>;
-
-export interface ActionContextWithUtils<S> extends ActionContext<S, S>, ActionUtils {}
+declare module 'vuex' {
+  interface ActionContext<S, R> extends ActionUtils{}
+}
 
 const requestIsPending = <S>(state: StateWithLoading<S>) => (key: string) => {
   const cacheObject = state.cache[key];
@@ -89,8 +86,11 @@ const wrapActionCache = <S>(
     name: string,
     k: string | number,
     object: string,
-    handler: CustomActionHandler<S>,
-) => async function (context: ActionContextWithUtils<StateWithLoading<S>>, payload: any) {
+    handler: ActionHandler<S, S>,
+) => async function (
+    this: Store<S>,
+    context: ActionContext<S, S>,
+    payload: any) {
   // Existing object in cache
   const key = getCacheKey(k, payload);
 
@@ -103,7 +103,6 @@ const wrapActionCache = <S>(
     return await context.getPendingRequest(key.toString());
   }
 
-  // @ts-ignore
   const promisedRes = handler.bind(this)(context, payload);
   context.setPendingPromise(key.toString(), promisedRes);
   const res = await promisedRes;
@@ -112,7 +111,7 @@ const wrapActionCache = <S>(
 };
 
 export const wrapActionCacheFetchKey = <S>(name: string) => (
-    handler: CustomActionHandler<S>,
+    handler: ActionHandler<S, S>,
     options: {
       payloadKey?: string,
       stateKey?: string,
@@ -122,7 +121,7 @@ export const wrapActionCacheFetchKey = <S>(name: string) => (
 };
 
 export const wrapActionCacheFetchAll = <S>(name: string) => (
-    handler: CustomActionHandler<S>,
+    handler: ActionHandler<S, S>,
     options: { stateKey?: string }
 ) => {
   return wrapActionCache(name, 'all', options.stateKey || name, handler);
