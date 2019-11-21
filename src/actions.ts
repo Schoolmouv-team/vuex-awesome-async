@@ -73,6 +73,7 @@ const actionUtils = <S>(
 };
 
 const getCacheKey = (key: string | number, payload: any) => {
+  console.log({ key })
   if (key === 'payload') {
     return payload
   } else if (key !== 'all') {
