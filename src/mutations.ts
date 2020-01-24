@@ -23,7 +23,6 @@ export const wrapMutations = <S>(name: string) => (mutations: MutationTree<S>) =
       }
     },
     [setErrorName]: (state: StateWithLoading<S>, error: Error | null) => {
-      console.log({error})
       state.error = error;
     },
     [resetErrorName]: (state: StateWithLoading<S>) => {
