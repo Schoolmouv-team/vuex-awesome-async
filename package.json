@@ -1,6 +1,6 @@
 {
   "name": "@schoolmouv/vuex-awesome-async",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "main": "dist/vue-store-loading-state.js",
   "umd:main": "dist/vue-store-loading-state.umd.js",
