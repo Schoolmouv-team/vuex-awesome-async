@@ -1,6 +1,6 @@
 {
   "name": "@schoolmouv/vuex-awesome-async",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "main": "dist/vue-store-loading-state.js",
   "umd:main": "dist/vue-store-loading-state.umd.js",
@@ -11,7 +11,7 @@
     "src:watch": "rollup -c --watch",
     "test": "jest src",
     "test:coverage": "jest src --coverage",
-    "prebublishOnly": "npm run src:build"
+    "prepublishOnly": "npm run src:build"
   },
   "author": "",
   "license": "ISC",
